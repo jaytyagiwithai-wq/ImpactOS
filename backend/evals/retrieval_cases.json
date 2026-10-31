@@ -1,0 +1,64 @@
+[
+  {
+    "id": "retrieval-001",
+    "query": "What must happen before removing customer_id from payment.completed?",
+    "expected_documents": [
+      "Payments Webhook Contract",
+      "Enterprise API Breaking-Change Policy"
+    ],
+    "required_terms": ["customer_id", "migration"],
+    "kind": "semantic"
+  },
+  {
+    "id": "retrieval-002",
+    "query": "Which service can break if customer_id is removed?",
+    "expected_documents": ["Billing Adapter Consumer"],
+    "required_terms": ["billing", "customer_id"],
+    "kind": "impact"
+  },
+  {
+    "id": "retrieval-003",
+    "query": "Which enterprise customer needs a webhook migration?",
+    "expected_documents": ["AcmePay Integration Guide"],
+    "required_terms": ["AcmePay", "account_reference"],
+    "kind": "entity"
+  },
+  {
+    "id": "retrieval-004",
+    "query": "What notice period is required for a breaking webhook change?",
+    "expected_documents": ["Enterprise API Breaking-Change Policy"],
+    "required_terms": ["30 days", "notice"],
+    "kind": "policy"
+  },
+  {
+    "id": "retrieval-005",
+    "query": "Find INC-184 and explain the prevention action.",
+    "expected_documents": ["Incident INC-184: Payment Reconciliation Mismatch"],
+    "required_terms": ["INC-184", "compatibility"],
+    "kind": "exact_identifier"
+  },
+  {
+    "id": "retrieval-006",
+    "query": "Does analytics definitely depend on customer_id?",
+    "expected_documents": ["Analytics Consumer Inventory"],
+    "required_terms": ["evidence gap", "not proof"],
+    "kind": "negative_evidence"
+  },
+  {
+    "id": "retrieval-007",
+    "query": "What replacement should new payment webhook consumers use?",
+    "expected_documents": ["Payments Webhook Contract"],
+    "required_terms": ["account_reference"],
+    "kind": "semantic"
+  },
+  {
+    "id": "retrieval-008",
+    "query": "Why should the billing adapter be included in release testing?",
+    "expected_documents": [
+      "Billing Adapter Consumer",
+      "Incident INC-184: Payment Reconciliation Mismatch"
+    ],
+    "required_terms": ["reconciliation"],
+    "kind": "impact"
+  }
+]

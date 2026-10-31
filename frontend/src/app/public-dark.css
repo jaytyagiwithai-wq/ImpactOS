@@ -1,0 +1,283 @@
+/* Neutral dark surfaces; color is reserved for actions and status. */
+.landing,
+.journal-page,
+.article-page {
+  background: var(--paper);
+  color: var(--ink);
+}
+.public-nav {
+  border-color: #2c2c2c;
+}
+.public-nav > nav,
+.nav-login,
+.hero-intro > p,
+.hero-bottom,
+.public-footer > div > p,
+.footer-links > a,
+.footer-bottom,
+.journal-page-heading p,
+.journal-index p,
+.article-reading .article-intro,
+.article-meta,
+.article-body p {
+  color: #b3b3b3;
+}
+.public-nav .mobile-nav {
+  background: #141414;
+  border-color: #333;
+}
+.brand-os {
+  color: #969696;
+}
+.button-solid {
+  color: #080808;
+}
+.button-outline,
+.section-link {
+  border-color: #444;
+}
+.icon-button:hover {
+  background: #262626;
+}
+.eyebrow,
+.hero-edition,
+.meta,
+.comparison-label,
+.comparison-bottom,
+.scene-coordinate,
+.scene-caption,
+.motion-control,
+.chapter-detail,
+.evidence-footnote,
+.article-preview-meta {
+  color: #a3a3a3;
+}
+.hero-new h1 em,
+.annotation,
+.desk-note {
+  color: var(--accent);
+}
+.hero-scene,
+.story-visual,
+.version-demo,
+.article-art {
+  background: #111;
+  border-color: #333;
+}
+.scene-topline,
+.scene-footer,
+.object-toolbar,
+.diff-bottom,
+.map-explanation,
+.comparison-report,
+.chapter-detail,
+.version-controls,
+.version-note,
+.footer-bottom {
+  border-color: #333;
+  color: #a3a3a3;
+}
+.scene-topline > span:first-child,
+.scene-footer a,
+.hero-scene .muted {
+  color: #c2c2c2;
+}
+.change-document,
+.outcome-object,
+.annotated-code,
+.map-node,
+.desk-finding,
+.source-view,
+.art-page,
+.art-version-card {
+  background: #191919;
+  border-color: #3a3a3a;
+  box-shadow: 0 16px 40px #0003;
+}
+.outcome-object.is-active {
+  border-color: var(--accent);
+  background: #1b1b1b;
+}
+.outcome-object p,
+.story-chapter > p,
+.map-explanation p,
+.evidence-heading > p,
+.version-header > p,
+.version-note,
+.journal-preview > p,
+.invitation-bottom p,
+.report-citation {
+  color: #adadad;
+}
+.outcome-object strong,
+.diff-code,
+.big-diff,
+.node-lit,
+.map-origin {
+  color: #ededed;
+}
+.outcome-icon,
+.verification-mark {
+  background: #292929;
+  color: var(--accent);
+}
+.icon-1 {
+  background: #292109;
+  color: #fbbf24;
+}
+.icon-2 {
+  background: #262626;
+  color: #b3b3b3;
+}
+.diff-code .removed,
+.big-diff .removed {
+  background: #291113;
+  color: #ff9292;
+}
+.scene-hub {
+  border-color: #4a4a4a;
+  box-shadow: 0 0 0 9px #111;
+}
+.scene-hub svg {
+  color: var(--accent);
+}
+.caption-index,
+.map-origin,
+.node-lit {
+  border-color: var(--accent);
+  background: #1b1b1b;
+}
+.node-question,
+.map-node small,
+.map-relationship,
+.map-explanation code,
+.story-progress button {
+  color: #a3a3a3;
+}
+.story-progress button > span,
+.paper-lines i,
+.art-page i {
+  background: #444;
+}
+.desk-paper {
+  background: #202020;
+  border-color: #404040;
+  color: #b3b3b3;
+}
+.desk-paper h3,
+.desk-paper .meta {
+  color: #c2c2c2;
+}
+.source-header,
+.source-explanation {
+  background: #151515;
+  border-color: #333;
+  color: #b3b3b3;
+}
+.code-lines {
+  color: #d4d4d4;
+}
+.line-number {
+  color: #777;
+}
+.code-lines .highlight {
+  background: #242424;
+  color: #fff;
+  box-shadow: inset 2px 0 var(--accent);
+}
+.source-explanation p,
+.source-location {
+  color: #adadad;
+}
+.segmented {
+  background: #0b0b0b;
+  border-color: #383838;
+}
+.segmented button {
+  color: #a3a3a3;
+}
+.segmented button.active {
+  background: #303030;
+  color: #fff;
+  box-shadow: none;
+}
+.badge-confirmed {
+  background: #10251a;
+  color: #4ade80;
+}
+.badge-possible {
+  background: #292109;
+  color: #fbbf24;
+}
+.badge-unknown,
+.badge-neutral {
+  background: #292929;
+  color: #c2c2c2;
+}
+.badge-accent {
+  background: #2a1712;
+  color: #ff795c;
+}
+.art-version {
+  background: #151515;
+}
+.article-art .art-page,
+.art-version-card {
+  background: #242424;
+  border-color: #4a4a4a;
+  color: #ededed;
+}
+.art-version-card.second {
+  color: var(--accent);
+}
+.art-page > span:first-child,
+.art-version-card span,
+.art-time {
+  color: #a3a3a3;
+}
+.art-source {
+  background: #222;
+  border-color: #4a4a4a;
+  color: var(--accent);
+}
+.version-curve {
+  border-color: var(--accent);
+}
+.final-invitation {
+  background: #141414;
+  border: 1px solid #3b3b3b;
+}
+.final-invitation > svg {
+  color: var(--accent);
+  opacity: 0.25;
+  transform: none;
+}
+.invitation-top .eyebrow,
+.invitation-top > span:last-child {
+  color: #adadad;
+}
+.article-body blockquote {
+  color: #d4d4d4;
+  border-color: var(--accent);
+}
+.dialog {
+  border-color: #3a3a3a;
+  box-shadow: 0 30px 100px #0008;
+}
+.dialog::backdrop {
+  background: #0008;
+}
+.skip-link {
+  background: #262626;
+  color: #fff;
+}
+.scene-connectors > path:first-child,
+.dependency-map > svg > path {
+  stroke: #494949;
+}
+.scene-connectors .animated-dash,
+.dependency-map .map-active-path,
+.citation-thread path,
+.art-evidence > svg path {
+  stroke: var(--accent);
+}

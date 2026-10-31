@@ -1,0 +1,6 @@
+Webhook contract v2
+
+The payment.completed webhook keeps customer_id for existing integrations.
+New consumers should prefer account_reference. Removing customer_id requires a
+versioned migration, compatibility testing for billing, and advance notice to
+customers with webhook contracts.

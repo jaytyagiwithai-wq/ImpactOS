@@ -3,11 +3,17 @@ import logging
 from dataclasses import dataclass
 from uuid import UUID
 from sqlalchemy.orm import Session
-from sqlalchemy import cast, literal, select, func
+from sqlalchemy import cast, literal, select, func, or_
 from sqlalchemy.dialects.postgresql import REGCONFIG
 from app.modules.documents.models import Document, DocumentVersion
 from app.modules.ingestion.models import Chunk
 from time import perf_counter
+
+
+from app.modules.retrieval.query_analysis import (
+    build_broad_lexical_query,
+)
+
 
 tracer = trace.get_tracer("impactos.retrieval")
 logger = logging.getLogger("impactos.retrieval")
@@ -57,15 +63,35 @@ def search_active_chunks_lexically(
 
             text_config = cast(literal("english"), REGCONFIG)
 
-            tsquery = func.websearch_to_tsquery(
+            strict_tsquery = func.websearch_to_tsquery(
                 text_config,
                 query_text,
             )
 
-            rank = func.ts_rank_cd(
+            broad_query_text = build_broad_lexical_query(query_text)
+
+            broad_tsquery = func.websearch_to_tsquery(
+                text_config,
+                broad_query_text,
+            )
+            strict_rank = func.ts_rank_cd(
                 Chunk.textsearch,
-                tsquery,
-            ).label("rank")    
+                strict_tsquery,
+            )
+
+            broad_rank = func.ts_rank_cd(
+                Chunk.textsearch,
+                broad_tsquery,
+            )
+
+            rank = func.greatest(
+                strict_rank,
+                broad_rank,
+            ).label("rank")
+
+            strict_match = Chunk.textsearch.op("@@")(strict_tsquery)
+            broad_match = Chunk.textsearch.op("@@")(broad_tsquery)
+
 
             statement = (
                 select(
@@ -90,7 +116,7 @@ def search_active_chunks_lexically(
                     Document.org_id == org_id,
                     Document.active_version_id == DocumentVersion.id,
                     DocumentVersion.status == "ready",
-                    Chunk.textsearch.op("@@")(tsquery),
+                    or_(strict_match, broad_match),
                 )
                 .order_by(rank.desc(), Chunk.id)
                 .limit(limit)

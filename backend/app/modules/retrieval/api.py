@@ -13,7 +13,7 @@ def search(
     session = Depends(get_session),
     org_id = Depends(get_local_org_id)) -> SearchResponse:
 
-    results = search_active_chunks_hybrid(
+    outcome = search_active_chunks_hybrid(
         session=session,
         org_id=org_id,
         query_text=payload.query_text,
@@ -21,15 +21,23 @@ def search(
     )
 
    
-    return SearchResponse(results=[SearchResult(
-        document_title=result.document_title, 
-        version_number=result.version_number, 
-        chunk_index=result.chunk_index, 
-        content=result.content,
-        chunk_id=result.chunk_id,
-        document_id=result.document_id,
-        version_id=result.version_id,
-        vector_position=result.vector_position,
-        lexical_position=result.lexical_position,
-        rrf_score=float(result.rrf_score)) for result in results]
+    return SearchResponse(
+        ranking_mode=outcome.ranking_mode,
+        results=[
+            SearchResult(
+                document_title=result.candidate.document_title,
+                version_number=result.candidate.version_number,
+                chunk_index=result.candidate.chunk_index,
+                content=result.candidate.content,
+                chunk_id=result.candidate.chunk_id,
+                document_id=result.candidate.document_id,
+                version_id=result.candidate.version_id,
+                vector_position=result.candidate.vector_position,
+                lexical_position=result.candidate.lexical_position,
+                rrf_score=float(result.candidate.rrf_score),
+                rerank_score=result.rerank_score,
+                rerank_position=result.rerank_position,
+            )
+            for result in outcome.results
+        ]
     )

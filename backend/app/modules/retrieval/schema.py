@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict, StringConstraints, Field
-from typing import Annotated
+from typing import Annotated, Literal
 from uuid import UUID
 class SearchRequest(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -22,8 +22,10 @@ class SearchResult(BaseModel):
     version_id: UUID
     vector_position: int | None
     lexical_position: int | None
-    rrf_score: float
+    rerank_score: float | None
+    rerank_position: int | None
 
 
 class SearchResponse(BaseModel):
+    ranking_mode: Literal["reranked", "rrf_fallback"]
     results: list[SearchResult]

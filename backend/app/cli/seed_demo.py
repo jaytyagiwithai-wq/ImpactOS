@@ -5,6 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.config import BACKEND_DIR
+from app.demo_corpus import DEMO_DOCUMENTS
 from app.model_registry import load_metadata
 from app.modules.documents.models import Document, DocumentVersion
 from app.modules.documents.schemas import DocumentCreate
@@ -15,16 +16,6 @@ from app.shared.storage.local import LocalFileStorage
 
 
 CORPUS_DIR = BACKEND_DIR / "evals" / "corpus"
-
-DEMO_DOCUMENTS = (
-    ("Payments Webhook Contract", "payments-webhook-contract.md"),
-    ("Billing Adapter Consumer", "billing-adapter.md"),
-    ("AcmePay Integration Guide", "acmepay-integration-guide.md"),
-    ("Enterprise API Breaking-Change Policy", "api-breaking-change-policy.md"),
-    ("Incident INC-184: Payment Reconciliation Mismatch", "incident-inc-184.md"),
-    ("Analytics Consumer Inventory", "analytics-consumer.md"),
-)
-
 
 def main() -> None:
     load_metadata()

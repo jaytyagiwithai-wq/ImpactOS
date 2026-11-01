@@ -8,12 +8,14 @@ from app.modules.documents.api import router as documents_router
 from app.shared.db.session import engine
 from app.modules.health.api import router as health_router
 from app.modules.retrieval.api import router as search_router
+from app.modules.retrieval.reranking import get_reranker
 
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
+        get_reranker()
         yield
     finally:
         engine.dispose()

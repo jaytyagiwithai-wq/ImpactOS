@@ -24,7 +24,7 @@ def main() -> None:
 
     load_metadata()
     org_id = get_local_org_id()
-    titles = [title for title, _ in DEMO_DOCUMENTS]
+    titles = [title for title, _, _ in DEMO_DOCUMENTS]
 
     try:
         with Session(engine) as session:

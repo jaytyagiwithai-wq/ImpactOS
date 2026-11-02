@@ -39,16 +39,15 @@ export function WorkspaceShell({ children }: { children: React.ReactNode }) {
             <span className="demo-header-label">Interactive demo</span>
           </div>
           <nav aria-label="Demo navigation">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => showSource()}
-              disabled={apiMode}
-            >
-              <Files size={16} />
-              <span>Sources</span>
-              <span className="source-count">{sources.length}</span>
-            </Button>
+            {apiMode ? (
+              <span className="live-header-status"><Files size={15} /> Sources are live</span>
+            ) : (
+              <Button variant="ghost" size="sm" onClick={() => showSource()}>
+                <Files size={16} />
+                <span>Sources</span>
+                <span className="source-count">{sources.length}</span>
+              </Button>
+            )}
             <Button variant="ghost" size="sm" asChild>
               <Link href="/" aria-label="Back to website">
                 <span>Website</span>
@@ -58,23 +57,11 @@ export function WorkspaceShell({ children }: { children: React.ReactNode }) {
           </nav>
         </header>
         <main id="demo-main" className="demo-main">
-          {apiMode ? (
-            <div className="demo-connection">
-              <h1>API not connected</h1>
-              <p>
-                Connect the FastAPI data adapter to use live investigations.
-              </p>
-              <Button variant="outline" asChild>
-                <Link href="/">Return home</Link>
-              </Button>
-            </div>
-          ) : (
-            children
-          )}
+          {children}
         </main>
         <footer className="demo-footer">
           <span>ImpactOS</span>
-          <span>Sample data. Live analysis isn’t connected.</span>
+          <span>{apiMode ? "Live evidence analysis" : "Sample product preview"}</span>
         </footer>
         <SourceDrawer
           open={open}

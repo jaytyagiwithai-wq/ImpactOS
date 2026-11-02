@@ -27,7 +27,7 @@ def main() -> None:
 
     try:
         with Session(engine, expire_on_commit=False) as session:
-            for title, filename in DEMO_DOCUMENTS:
+            for title, filename, source_type in DEMO_DOCUMENTS:
                 path = CORPUS_DIR / filename
                 digest = sha256(path.read_bytes()).hexdigest()
 
@@ -47,7 +47,7 @@ def main() -> None:
                         org_id=org_id,
                         payload=DocumentCreate(
                             title=title,
-                            source_type="markdown",
+                            source_type=source_type,
                         ),
                     )
                     document_id = document.id
@@ -74,7 +74,7 @@ def main() -> None:
                         document_id=document_id,
                         source=source,
                         filename=filename,
-                        media_type="text/markdown",
+                        media_type=("text/x-python" if source_type == "code" else "text/markdown"),
                     )
 
                 print(f"Uploaded {title}: {version.id}")

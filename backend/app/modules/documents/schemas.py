@@ -38,3 +38,22 @@ class DocumentVersionRead(BaseModel):
     byte_size: int
     status: str
     created_at: datetime
+
+
+class DocumentSourceRead(BaseModel):
+    """A document plus its most recently uploaded version for the local UI."""
+
+    document: DocumentRead
+    latest_version: DocumentVersionRead | None
+
+
+class SourceChunkRead(BaseModel):
+    chunk_id: UUID
+    document_id: UUID
+    document_title: str
+    source_type: str
+    version_id: UUID
+    version_number: int
+    original_filename: str
+    chunk_index: int
+    content: str

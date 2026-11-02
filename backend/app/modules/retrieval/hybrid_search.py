@@ -11,7 +11,7 @@ from app.modules.retrieval.fusion import fuse_ranked_results
 from app.modules.retrieval.lexical_search import search_active_chunks_lexically
 from app.modules.retrieval.reranking import (
     PairScorer,
-    RerankedSearchResult,
+    RankedSearchResult,
     get_reranker,
     rerank_candidates,
     rrf_fallback_results,
@@ -24,7 +24,7 @@ tracer = trace.get_tracer("impactos.retrieval")
 
 @dataclass(frozen=True)
 class HybridSearchOutcome:
-    results: list[RerankedSearchResult]
+    results: list[RankedSearchResult]
     ranking_mode: Literal["reranked", "rrf_fallback"]
 
 

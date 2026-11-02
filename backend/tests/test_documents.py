@@ -16,9 +16,9 @@ from sqlalchemy.orm import Session
 from app.model_registry import load_metadata
 from app.modules.documents import service
 from app.modules.documents.errors import DocumentNotFound, DocumentStorageUnavailable
-from app.modules.documents.models import DocumentVersion
+from app.modules.documents.models import Document, DocumentVersion
 from app.modules.documents.schemas import DocumentCreate
-from app.modules.ingestion.parsing import extract_text
+from app.modules.ingestion.loaders import load_doc
 from app.modules.organizations.models import Organization
 from app.shared.storage.base import EmptyUpload, UploadTooLarge
 from app.shared.storage.local import LocalFileStorage
@@ -29,7 +29,12 @@ class DocumentServiceTests(unittest.TestCase):
         self.engine = create_engine("sqlite://")
         with self.engine.begin() as connection:
             connection.exec_driver_sql("PRAGMA foreign_keys=ON")
-        load_metadata().create_all(self.engine)
+        # This unit suite exercises document registration/upload only. Chunks
+        # deliberately use PostgreSQL-only tsvector/pgvector columns, so do
+        # not try to compile the retrieval table against SQLite.
+        Organization.__table__.create(self.engine)
+        Document.__table__.create(self.engine)
+        DocumentVersion.__table__.create(self.engine)
         self.session = Session(self.engine, expire_on_commit=False)
         self.org_id = uuid4()
         with self.session.begin():
@@ -163,15 +168,25 @@ class ApplicationContractTests(unittest.TestCase):
     def test_module_models_share_metadata_and_resolve_foreign_keys(self):
         metadata = load_metadata()
         self.assertEqual(
-            [table.name for table in metadata.sorted_tables],
-            ["organizations", "documents", "document_versions", "chunks"],
+            {table.name for table in metadata.tables.values()},
+            {"organizations", "documents", "document_versions", "chunks"},
         )
 
-    def test_parser_preserves_source_locations_after_move(self):
+    def test_loader_preserves_content_and_attaches_version_metadata(self):
         content = "# Webhook\n\n  customer_id is required.\n"
-        self.assertEqual(
-            extract_text(BytesIO(content.encode("utf-8-sig")), "markdown"), content
-        )
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "webhook.md"
+            path.write_text(content, encoding="utf-8")
+            documents = load_doc(
+                path=path,
+                source_type="markdown",
+                org_id=uuid4(),
+                document_id=uuid4(),
+                version_id=uuid4(),
+            )
+        self.assertEqual(documents[0].page_content, content)
+        self.assertEqual(documents[0].metadata["source_type"], "markdown")
+        self.assertIn("version_id", documents[0].metadata)
 
 
 if __name__ == "__main__":

@@ -12,8 +12,8 @@ def load_doc(
         document_id: UUID,
         version_id: UUID
 )-> list[Document]:
-    if source_type not in ["text","markdown"]:
-        raise ValueError("Only text and Markdowns are supported")
+    if source_type not in ["text", "markdown", "code", "openapi"]:
+        raise ValueError("Only text, markdown, code, and OpenAPI files are supported")
 
     size = path.stat().st_size
 

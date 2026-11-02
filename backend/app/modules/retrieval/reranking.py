@@ -16,7 +16,7 @@ class PairScorer(Protocol):
 
 
 @dataclass(frozen=True)
-class RerankedSearchResult:
+class RankedSearchResult:
     candidate: FusedSearchResult
     rerank_score: float | None
     rerank_position: int | None
@@ -26,13 +26,13 @@ def rrf_fallback_results(
     candidates: list[FusedSearchResult],
     *,
     limit: int,
-) -> list[RerankedSearchResult]:
+) -> list[RankedSearchResult]:
     """Preserve safe RRF ordering when the optional reranker is unavailable."""
     if not 1 <= limit <= 50:
         raise ValueError("Rerank limit must be between 1 and 50.")
 
     return [
-        RerankedSearchResult(
+        RankedSearchResult(
             candidate=candidate,
             rerank_score=None,
             rerank_position=None,
@@ -101,7 +101,7 @@ def rerank_candidates(
     scorer: PairScorer,
     *,
     limit: int = 5,
-) -> list[RerankedSearchResult]:
+) -> list[RankedSearchResult]:
 
     query_text = query_text.strip()
     if not query_text:
@@ -137,7 +137,7 @@ def rerank_candidates(
 
 
     return [
-        RerankedSearchResult(
+        RankedSearchResult(
             candidate=candidate,
             rerank_score=score,
             rerank_position=position,

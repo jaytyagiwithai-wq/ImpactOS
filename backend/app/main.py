@@ -10,7 +10,8 @@ from app.modules.health.api import router as health_router
 from app.modules.retrieval.api import router as search_router
 from app.modules.retrieval.reranking import get_reranker
 
-
+from app.modules.answering.api import router as answers_router
+from fastapi.middleware.cors import CORSMiddleware
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -30,9 +31,18 @@ def create_app() -> FastAPI:
         debug=settings.debug,
         lifespan=lifespan,
     )
+    application.add_middleware(
+        CORSMiddleware,
+        allow_origins=["http://127.0.0.1:4178"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+
+    )
     application.include_router(health_router)
     application.include_router(documents_router)
     application.include_router(search_router)
+    application.include_router(answers_router)
     return application
 
 

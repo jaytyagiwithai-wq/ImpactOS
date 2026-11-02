@@ -1,4 +1,4 @@
-import { DemoWorkspace } from "@/components/demo-workspace";
+import { LiveAnswerWorkspace } from "@/components/live-answer-workspace";
 export default function Page() {
-  return <DemoWorkspace />;
+  return <LiveAnswerWorkspace />;
 }

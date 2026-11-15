@@ -10,7 +10,8 @@ traceable investigations.
 
 ## Current status
 
-- The frontend is a polished Next.js demo with synthetic investigation reports.
+- The frontend includes a live evidence workspace for local upload, indexing,
+  grounded answers, and source-chunk inspection.
 - The backend is a FastAPI modular monolith with PostgreSQL/pgvector-oriented
   data models, migrations, local document storage, and focused tests.
 - Live authentication, production document ingestion, retrieval, and model

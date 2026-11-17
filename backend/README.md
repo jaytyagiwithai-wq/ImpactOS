@@ -102,10 +102,9 @@ Settings still load `backend/.env`. Local files remain under
 
 ## Current implementation limits
 
-The tenant dependency is a local/test fixture, not authentication. Parsing
-supports text and Markdown; registering another source type does not add a
-parser for it. Indexing, retrieval, model calls, and durable ingestion jobs
-have not been implemented.
+The tenant dependency is a local/test fixture, not authentication. Local
+ingestion supports text, Markdown, code, and OpenAPI files; PDF parsing and
+durable asynchronous ingestion jobs are still future work.
 
 A file retained after a failed database write is flagged for reconciliation.
 No durable reconciliation worker exists yet. The local storage helper attempts

@@ -80,7 +80,7 @@ uv run python -m app.cli.seed
 Run focused checks:
 
 ```bash
-uv run python -m unittest discover -s tests -v
+uv run pytest -q
 ```
 
 The service checks use a disposable in-memory SQLite database and temporary

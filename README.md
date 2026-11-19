@@ -54,7 +54,7 @@ npm run typecheck
 npm run build
 
 cd ..\backend
-uv run python -m unittest discover -s tests -v
+uv run pytest -q
 ```
 
 See the component READMEs for architecture, integration boundaries, and

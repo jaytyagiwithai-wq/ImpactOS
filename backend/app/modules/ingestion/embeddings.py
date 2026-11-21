@@ -28,7 +28,7 @@ def embed_texts(
         raise ValueError("Embedding batch exceeds batch size")
 
     if any(not text.strip() for text in texts):
-        raise ValueError("Embedding cant have blanks broski")
+        raise ValueError("Embedding input cannot contain blank text")
 
     client = client or OpenAI(
         api_key=settings.openai_api_key.get_secret_value(),

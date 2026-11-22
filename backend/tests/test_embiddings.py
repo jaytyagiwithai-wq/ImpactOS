@@ -58,3 +58,17 @@ def test_embed_texts_rejects_wrong_vector_dimension(settings):
 
     with pytest.raises(embeddings.EmbeddingProviderError):
         embeddings.embed_texts(["hello"], client=FakeClient(response))
+
+
+def test_embed_texts_rejects_blank_input_before_calling_provider(settings):
+    client = FakeClient(response=None)
+
+    with pytest.raises(ValueError, match="cannot contain blank text"):
+        embeddings.embed_texts(["valid", "   "], client=client)
+
+    assert client.embeddings.calls == []
+
+
+def test_embed_texts_rejects_a_batch_larger_than_configured_limit(settings):
+    with pytest.raises(ValueError, match="exceeds batch size"):
+        embeddings.embed_texts(["one", "two", "three"], client=FakeClient(response=None))
